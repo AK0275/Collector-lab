@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Car List</h1>
+
+{% for car in cars %}
+<div class="card">
+    <a href="{% url 'detail' car.id %}">
+    <div class="card-content">
+    <div class="flex-container">
+
+    <div>
+        <span class="card-title">{{ car.name }}</span>
+        <p>models: {{ car.model }} </p>
+        <p>price: {{ car.price }} </p>
+        <p>description: {{ car.description }}</p>
+    </div>
+
+    <div>
+        {% load static %}
+        <img src="{% static car.image|cut:'main_app/static/' %}" width="110px" height="110px">
+    </div>
+
+    </div>
+</div>
+</a>
+</div>
+{% endfor %}
+{% endblock %}

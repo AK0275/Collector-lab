@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Car Detail</h1>
+
+<div class="card">
+    <div class="card-content">
+        <div class="flex-container">
+
+    <div>
+        <span class="card-title">{{ car.name }}</span>
+        <p>models: {{ car.model }} </p>
+        <p>price: {{ car.price }}$</p>
+        <p>Description: {{ car.description }} </p>
+    <div class="card-section">
+        <a href="{% url 'cars_update' car.id %}">Edit</a>
+        <a href="{% url 'cars_delete' car.id %}">Delete</a>
+    </div>
+    
+    
+    </div>
+
+    <div>
+        {% load static %}
+        <img src="{% static car.image|cut:'main_app/static/' %}" width="110px" height="110px">
+    </div>
+
+</div>
+</div>
+</div>
+
+<div>
+
+    <div>
+        <form method="post" action="{% url 'add_checking' car.id %}" method="post">
+            {% csrf_token %}
+            {{ checking_form.as_p }}
+            <input type="submit" class="btn" value="Add Checking">
+        </form>
+
+    <br>
+    {% if car.checked_for_today %}
+        <div class="card-panel teal-text center-align">{{car.name}} I checked everything </div>
+    {% else %}
+        <div class="card-panel red-text center-align">{{car.name}} I still haven't checked it.</div>
+    {% endif %}
+    </div>
+
+
+
+    <table class="striped">
+        <thead>
+            <tr>
+                <th> Date </th>
+                <th> check </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for checking in car.checking_set.all %}
+            <tr>
+                <td> {{ checking.date }}</td>
+                <td> {{ checking.get_chck_display }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<hr>
+<div class="row">
+<div class="col s6">
+    <h3>{{ car.name }} Services</h3>
+    {% if car.services.count %}
+    {% for service in car.services.all %}
+        <div class="card">
+        <div class="card-content">
+            <span class="card-title">
+            {{ service.name }}
+            </span>
+            <form action="{% url 'unassoc_service' car.id service.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn">Remove</button>
+            </form>
+        </div>
+        </div>
+    {% endfor %}
+    {% else %}
+    <h5>No services</h5>
+    {% endif %}
+</div>
+
+<div class="col s6">
+    <h3>Available Services</h3>
+    {% if services.count  %}
+    {% for service in services.all %}
+    <div class="card">
+    <div class="card-content">
+        <span class="card-title">
+        A {{service.name}}
+        </span>
+    </div>
+
+<div class="card-action">
+<form action="{% url 'assoc_service' car.id service.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn">Add</button>
+</form>
+</div>
+
+    </div>
+    {% endfor %}
+    {% else %}
+    <h5>{{car.name}} already have all the services!</h5>
+    {% endif %}
+</div>
+
+</div>
+
+</div>
+
+<script>
+    var dateEl = document.getElementById('id_date');
+    M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+    });
+    let selectEl = document.getElementById('id_chck');
+    M.FormSelect.init(selectEl);
+
+
+</script>
+
+{% endblock %}
