@@ -1,6 +1,7 @@
 from django.urls import path
 # from .models import Car
-from . import views
+from .import views
+from .views import profile
 
 
 urlpatterns = [
@@ -25,5 +26,7 @@ urlpatterns = [
 
     path('accounts/signup/', views.signup, name='signup'),
 
+
+    path('profile/', profile, name='users-profile'),
 ]
 

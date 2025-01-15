@@ -94,6 +94,10 @@ def unassoc_service(request, car_id, service_id):
     return redirect('detail', car_id = car_id)
 
 
+@login_required
+def profile(request):
+    return render(request, 'users/profile.html')
+
 
 def signup(request):
     error_message = ''
