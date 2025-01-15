@@ -32,7 +32,7 @@
 
 <div>
 
-    <div>
+    <>
         <form method="post" action="{% url 'add_checking' car.id %}" method="post">
             {% csrf_token %}
             {{ checking_form.as_p }}
@@ -130,8 +130,6 @@
     });
     let selectEl = document.getElementById('id_chck');
     M.FormSelect.init(selectEl);
-
-
 </script>
 
 {% endblock %}

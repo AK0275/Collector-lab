@@ -6,3 +6,4 @@ from .models import Car, CHECKING, Service
 admin.site.register(Car)
 admin.site.register(CHECKING)
 admin.site.register(Service)
+

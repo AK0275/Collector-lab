@@ -2,6 +2,7 @@ from django.urls import path
 # from .models import Car
 from . import views
 
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
@@ -21,6 +22,8 @@ urlpatterns = [
     path('cars/<int:car_id>/assoc_service/<int:service_id>/', views.assoc_service, name='assoc_service'),
 
     path('cars/<int:car_id>/unassoc_service/<int:service_id>/', views.unassoc_service, name='unassoc_service'),
+
+    path('accounts/signup/', views.signup, name='signup'),
 
 ]
 

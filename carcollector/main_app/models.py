@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -31,6 +32,7 @@ class Car(models.Model):
     price = models.IntegerField()
     image = models.ImageField(upload_to='main_app/static/uploads/', default="")
     services = models.ManyToManyField(Service)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
     def get_absolute_url(self):
@@ -53,6 +55,9 @@ class CHECKING(models.Model):
     def __str__(self):
         return f"{self.get_chck_display()} on {self.date}"
     
+
+
+
 
 
 class Meta:

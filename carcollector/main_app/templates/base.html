@@ -17,13 +17,26 @@
             <ul>
             <li><a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;CarCollector</a></li>
             </ul>
-            <ul class="right">
+            
+        <ul class="right">
+            {% if user.is_authenticated %}
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'cars_create' %}">Add a Cars</a></li>
             <li><a href="{% url 'index' %}">View All My Cars</a></li>
             <li><a href="{% url 'services_create' %}">Add a service</a></li>
             <li><a href="{% url 'services_index' %}">View All Service</a></li>
-            </ul>
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+                </form>
+            </li>
+            Hi {{ user.username }}
+                {% else %}
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                <li><a href="{% url 'login' %}">Log In</a></li>
+                {% endif %}
+        </ul>
         </div>
         </nav>
     </header>
